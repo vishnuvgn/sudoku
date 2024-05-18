@@ -1,3 +1,7 @@
+# This script assumes that with every "analysis of the board" iteration,
+# there will be at least one square with only one possible entry
+# NOTE: THIS IS NOT THE CASE FOR EVERY SUDOKU!!!
+
 import time
 # O(n)
 def rowCheck(coords, possibleEntry, board):
