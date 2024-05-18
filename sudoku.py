@@ -1,4 +1,3 @@
-import math
 import time
 # O(n)
 def rowCheck(coords, possibleEntry, board):
