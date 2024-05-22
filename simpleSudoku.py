@@ -53,7 +53,7 @@ def getPossibleEntries(coords, board):
     return possibleEntries
 
 
-BOARD = [
+board1 = [
     [None, None, 2, 7, None, 1, None, None, 6],
     [None, None, None, 6, 9, None, None, 1, None],
     [None, 9, 6, None, 8, None, None, 5, 3],
@@ -65,9 +65,33 @@ BOARD = [
     [5, None, 1, None, None, 9, 3, None, 4],
 ]
 
-def main():
+board1 = [
+    [None, None, 2, 7, None, 1, None, None, 6],
+    [None, None, None, 6, 9, None, None, 1, None],
+    [None, 9, 6, None, 8, None, None, 5, 3],
+    [9, 8, 4, None, None, None, None, None, None],
+    [2, None, None, None, None, None, 6, 4, None],
+    [6, None, 3, None, None, 5, 8, None, None],
+    [None, 7, 8, None, 1, 4, 9, None, None],
+    [4, 2, None, 3, 6, 7, None, None, 5],
+    [5, None, 1, None, None, 9, 3, None, 4],
+]
+
+board2 = [
+    [3, 8, 6, None, None, 4, 7, None, None],
+    [None, None, 9, None, None, None, 2, None, None],
+    [None, 2, None, 1, None, 3, 8, None, 5],
+    [None, 7, 8, None, 3, None, 6, 2, None],
+    [None, 5, 2, None, None, 1, None, None, 4],
+    [None, 4, None, 2, 7, None, None, None, None], # first val was 9
+    [2, 3, None, 7, 4, 9, 5, 8, 6],
+    [8, None, None, None, 1, None, 4, None, None],
+    [4, None, None, None, None, None, None, None, 2],
+]
+
+def simple(board) -> tuple:
     startTime = time.time()
-    possibleEntries = dict()
+    possibleEntries = dict() # dictionary of coordinates (key) to possibleEntries (value)
 
     i = 0
 
@@ -75,20 +99,22 @@ def main():
         i = 1
         for y in range(9):
             for x in range(9):
-                if BOARD[y][x] == None:
-                    possibleEntries[(x,y)] = getPossibleEntries((x,y), BOARD)
+                if board[y][x] == None:
+                    possibleEntries[(x,y)] = getPossibleEntries((x,y), board)
         
-        # print(BOARD)
-        # print(possibleEntries)
+        
+        singleValExists = False
         for coords, possibleNums in possibleEntries.items():
             x, y = coords
             if len(possibleNums) == 1:
-                BOARD[y][x] = possibleNums[0]
-                
-        possibleEntries = {coords: possibleNums for coords, possibleNums in possibleEntries.items() if len(possibleNums) != 1}
+                singleValExists = True
+                board[y][x] = possibleNums[0]
+        if singleValExists == False:
+            break 
+        possibleEntries = {coords : possibleNums for coords, possibleNums in possibleEntries.items() if len(possibleNums) != 1}
         # print(possibleEntries)
+    
+    return (board, possibleEntries)
+    # print(f'time for simple solve / analysis: {time.time()-startTime}')
 
-    print(BOARD)
-    print(time.time()-startTime)
-
-main()
+# print(simple(board2)[0])
